@@ -1,4 +1,4 @@
-public class Stack<T extends Comparable<T>> {
+public class MyStack<T extends Comparable<T>> {
     private class Node {
         T data;
         Node next = null;

@@ -116,6 +116,84 @@ public class BinaryTree<T extends Comparable<T>> {
         return sb.toString();
     }
 
+    public List<T> inorderIterative() {
+        List<T> nodesList = new ArrayList<T>();
+        if (root == null) {
+            return nodesList;
+        }
+        // create a stack
+        Stack<Node> stack = new Stack<Node>();
+        Node node = root;
+        // move to extreme left, saving root every time
+        while (true) {
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+                continue;
+            }
+            // now node must be null, so we should pop from stack
+            if (stack.empty()) {
+                break;
+            }
+            node = stack.pop();
+            nodesList.add(node.data);
+            // now move to right of node following same procedure
+            node = node.right;
+        }
+        return nodesList;
+    }
+
+    public List<T> preorderIterative() {
+        List<T> nodesList =new ArrayList<T>();
+        Stack<Node> stack = new Stack<Node>();
+        Node node = root;
+        while (true) {
+            if (node != null) {
+                nodesList.add(node.data);
+                stack.push(node);
+                node = node.left;
+                continue;
+            }
+            if (stack.empty()) {
+                break;
+            }
+            node = stack.pop().right;
+        }
+        return nodesList;
+    }
+
+    public List<T> postorderIterative() {
+        List<T> nodesList =new ArrayList<T>();
+        Stack<Node> stack = new Stack<Node>();
+        Node node = root;
+        while (true) {
+            if (node != null) {
+                if (node.right != null) {
+                    stack.push(node.right);
+                }
+                stack.push(node);
+                node = node.left;
+                continue;
+            }
+            if (stack.empty()) {
+                break;
+            }
+            // now our node is null, so pop something from stack
+            node = stack.pop();
+            // if node's right child == stack.peek() then take 
+            // out the right child and push this node instead.
+            if (!stack.empty() && node.right != null && node.right == stack.peek()) {
+                Node temp = node;
+                node = stack.pop();
+                stack.push(temp);
+            } else {
+                nodesList.add(node.data);
+                node = null;
+            }
+        }
+        return nodesList;
+    }
+
     public String preorder() {
         StringBuffer sb = new StringBuffer();
         preorder(this.root, sb);
@@ -127,6 +205,19 @@ public class BinaryTree<T extends Comparable<T>> {
         sb.append(cur.data + " ");
         preorder(cur.left,sb);
         preorder(cur.right, sb);
+    }
+    
+    public String postorder() {
+        StringBuffer sb = new StringBuffer();
+        postorder(this.root, sb);
+        return sb.toString();
+    }
+    
+    private void postorder(Node cur, StringBuffer sb) {
+        if (cur == null) return;
+        postorder(cur.left,sb);
+        postorder(cur.right, sb);
+        sb.append(cur.data + " ");
     }
     
     private void inorder(Node cur, StringBuffer sb) {

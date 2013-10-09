@@ -1,6 +1,6 @@
 public class StackTest {
     public static void main(String[] args) {
-        Stack<Integer> stack = new Stack<Integer>();
+        MyStack<Integer> stack = new MyStack<Integer>();
         for(String arg : args) {
             stack.push(Integer.parseInt(arg));
         }
