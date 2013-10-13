@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class BinaryTree<T extends Comparable<T>> {
-    private class Node {
+    protected class Node {
         T data;
         Node left = null;
         Node right = null;
@@ -11,7 +11,7 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
-    private Node root;
+    protected Node root;
     private Random random = new Random();
 
     public boolean isBalanced() {
@@ -35,6 +35,7 @@ public class BinaryTree<T extends Comparable<T>> {
                 List<
     }
 */
+    
     public T findCommonAncestor(T node1, T node2) {
         return findCommonAncestor(this.root, node1, node2);
     }
@@ -201,10 +202,15 @@ public class BinaryTree<T extends Comparable<T>> {
     }
     
     private void preorder(Node cur, StringBuffer sb) {
-        if (cur == null) return;
-        sb.append(cur.data + " ");
+        if (cur == null) {
+            sb.append("_");
+            return;
+        }
+        sb.append(cur.data + "{");
         preorder(cur.left,sb);
+        sb.append(",");
         preorder(cur.right, sb);
+        sb.append("}");
     }
     
     public String postorder() {

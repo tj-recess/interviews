@@ -4,17 +4,20 @@ public class BSTTest {
     public static void main(String[] args) {
 
         System.out.println("------------------BST----------------");
-        BST<Integer> bst = new BST<Integer>();
+        //BST<Integer> bst = new BST<Integer>();
+        BSTInt bst = new BSTInt();
         List<Integer> allData = generateData(Integer.parseInt(args[0]));
         populateBST(allData, bst);
         printPerLevel(bst);
-        System.out.println("Inorder looks like: " + bst.inorder());
+        //System.out.println("Inorder looks like: " + bst.inorder());
         System.out.println("Preorder looks like: " + bst.preorder());
-        System.out.println("Is Balanced = " + bst.isBalanced());
+        //System.out.println("Is Balanced = " + bst.isBalanced());
         Random random = new Random();
         int x = allData.get(random.nextInt(allData.size()));
-        System.out.println("Successor of " + x + " is: " + bst.findSuccessor(x));
-        System.out.println("Predecessor of " + x + " is: " + bst.findPredecessor(x));
+        //System.out.println("Successor of " + x + " is: " + bst.findSuccessor(x));
+        //System.out.println("Predecessor of " + x + " is: " + bst.findPredecessor(x));
+        bst.addAllGreater();
+        System.out.println("Preorder looks like: " + bst.preorder());
     }
     
     public static void populateBST(List<Integer> allData, BST<Integer> tree) {

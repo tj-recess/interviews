@@ -2,6 +2,7 @@ import java.util.*;
 
 public class BinaryTreeTest {
     public static void main(String[] args) {
+        /*
         System.out.println("------------------Binary Tree----------------");
         BinaryTree<Integer> binTree = new BinaryTree<Integer>();
         
@@ -19,6 +20,7 @@ public class BinaryTreeTest {
         int x = allData.get(random.nextInt(allData.size()));
         int y = allData.get(random.nextInt(allData.size()));
         System.out.println("Common ancestor of " + x + " and " + y + " is: " + binTree.findCommonAncestor(x, y));
+        */
 
         /*
         System.out.println("\n\nGenerating tree with min height from given input:");
@@ -29,12 +31,28 @@ public class BinaryTreeTest {
         System.out.println("Preorder looks like: " + binTreeS.preorder());
         System.out.println("Is Balanced = " + binTreeS.isBalanced());
         */
+        
+        System.out.println("-----------Int Binary Tree----------------");
+        IntBinaryTree binTree = new IntBinaryTree();
+        
+        List<Integer> allData = generateData(Integer.parseInt(args[0]));
+        populateTree(allData, binTree);
+        printPerLevel(binTree);
+        System.out.println("Inorder(R) looks like: " + binTree.inorder());
+        System.out.println("Preorder(R) looks like: " + binTree.preorder());
+        System.out.println("Postorder(R) looks like: " + binTree.postorder());
+        System.out.println("----Removing nodes with path len > " + args[1] + "-------------");
+        binTree.removeNodesNotInPathWithGivenSum(Integer.parseInt(args[1]));
+        printPerLevel(binTree);
+        System.out.println("Inorder(R) looks like: " + binTree.inorder());
+        System.out.println("Preorder(R) looks like: " + binTree.preorder());
+        System.out.println("Postorder(R) looks like: " + binTree.postorder());
     }
     
     public static void populateTree(int maxNodes, BinaryTree<Integer> tree) {
         Random random = new Random();
         for(int i = 0; i < maxNodes; i++) {
-            tree.add(random.nextInt(100));
+            tree.add(random.nextInt(10));
         }
     }
 
@@ -48,7 +66,7 @@ public class BinaryTreeTest {
         Random random = new Random();
         List<Integer> allData = new ArrayList<Integer>();
         for(int i = 0; i < maxNodes; i++) {
-            allData.add(random.nextInt(100));
+            allData.add(random.nextInt(10));
         }
         return allData;
     }

@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class BST<T extends Comparable<T>> {
-    private class Node {
+    protected class Node {
         T data;
         Node left = null;
         Node right = null;
@@ -12,7 +12,7 @@ public class BST<T extends Comparable<T>> {
         }
     }
 
-    private Node root;
+    protected Node root;
     private Random random = new Random();
 
     public boolean isBalanced() {
@@ -79,10 +79,15 @@ public class BST<T extends Comparable<T>> {
     }
     
     private void preorder(Node cur, StringBuffer sb) {
-        if (cur == null) return;
-        sb.append(cur.data + " ");
+        if (cur == null) {
+            sb.append("_");
+            return;
+        }
+        sb.append(cur.data + "{");
         preorder(cur.left,sb);
+        sb.append(",");
         preorder(cur.right, sb);
+        sb.append("}");
     }
     
     private void inorder(Node cur, StringBuffer sb) {
