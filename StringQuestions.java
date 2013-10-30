@@ -7,8 +7,10 @@ public class StringQuestions {
         for(String s : args) {
             System.out.println("All chars unique in " + s + " : " + sq.areAllUnique(s));
             System.out.println("Reverse of " + s + " is : " + sq.reverse(s.toCharArray()));
+            System.out.println("Reverse (Recursive) of " + s + " is : " + sq.reverseRec(s));
             System.out.println("Non-duplicates of " + s + " are : " + sq.removeDups(s.toCharArray()));
-            System.out.println("All perms of " + s + " are: " + sq.allPerms(s));
+            //System.out.println("All perms of " + s + " are: " + sq.allPerms(s));
+            System.out.println("Reversed words of " + s + " are: " + sq.reverseWords(s));
         }
     }
 
@@ -73,12 +75,49 @@ public class StringQuestions {
     public String reverse(char[] str) {
         int start = 0;
         int end = str.length - 1;
+        reverse(str, start, end);
+        return new String(str);
+    }
+
+    public void reverse(char[] str, int start, int end) {
+        if (start < 0 || start == end || end >= str.length || start > end) {
+            return;
+        }
         for(; start < end; start++, end--) {
             char temp = str[start];
             str[start] = str[end];
             str[end] = temp;
         }
-        return new String(str);
+    }
+
+    public String reverseRec(String str) {
+        if (str.length() == 1) {
+            return str;
+        }
+        char first = str.charAt(0);
+        String rest = str.substring(1); // 1 to last
+        return reverseRec(rest) + first;
+    }
+
+    public String reverseWords(String str) {
+        char[] chars = str.toCharArray();
+        int len = chars.length;
+        reverse(chars, 0, len-1);
+        // now reverse each word of rev
+        int start = 0;
+        for (int i = 0; i < len; i++) {
+            // System.out.println("DEBUG: start = " + start);
+            // System.out.println("DEBUG: i = " + i);
+            // System.out.println("DEBUG: chars = " + (new String(chars)));
+            if (chars[i] == ' ') {
+                // reverse everything between start and this i-1 in place
+                reverse(chars, start, i-1);
+                start = i+1;
+            }
+        }
+        System.out.println("DEBUG: start = " + start);
+        reverse(chars, start, len-1);
+        return new String(chars);
     }
 
     /**
