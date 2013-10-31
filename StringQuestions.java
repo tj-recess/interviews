@@ -5,6 +5,7 @@ public class StringQuestions {
     public static void main(String[] args) {
         StringQuestions sq = new StringQuestions();
         for(String s : args) {
+            System.out.println("Unique longest substring for " + s + " is: " + sq.longestSubstring(s));
             System.out.println("All chars unique in " + s + " : " + sq.areAllUnique(s));
             System.out.println("Reverse of " + s + " is : " + sq.reverse(s.toCharArray()));
             System.out.println("Reverse (Recursive) of " + s + " is : " + sq.reverseRec(s));
@@ -143,5 +144,50 @@ public class StringQuestions {
             sb.append(str[i]);
         }
         return sb.toString();
+    }
+
+    /**
+    * Finds longest substring of given string which doesn't have duplicates.
+    */
+    public String longestSubstring(String s) {
+        char[] chars = s.toCharArray();
+        // maintain 1 array for start position per character
+        int[] startPos = new int[chars.length];
+        if (chars.length >= 1) {
+            startPos[0] = 0;    // first char is unique
+        }
+        for (int i = 1; i < chars.length; i++) {
+            // for each char, check if it's been captured already or not
+            // if it's been, start new substring from this point
+            // else, keep starting position same as previous
+            boolean alreadyCaptured = false;
+            int prvsStartPos = startPos[i-1];
+            for (; prvsStartPos < i; prvsStartPos++) {
+                if (chars[prvsStartPos] == chars[i]) {
+                    alreadyCaptured = true;
+                    break;
+                }
+            }
+            if (alreadyCaptured) {
+                startPos[i] = i;
+            } else {
+                startPos[i] = startPos[i-1];
+            }
+        }
+
+        // run through starPos array again to compute max-length
+        int maxLen = -1;
+        int maxStart = -1;
+        int maxEnd = -1;
+        for (int i = 0; i < chars.length; i++) {
+            int curLen = i - startPos[i] + 1;
+            if (curLen > maxLen) {
+                maxLen = curLen;
+                maxStart = startPos[i];
+                maxEnd = i;
+            }
+        }
+
+        return new String(chars, maxStart, (maxEnd - maxStart + 1));
     }
 }
