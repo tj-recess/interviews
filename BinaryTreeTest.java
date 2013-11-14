@@ -2,7 +2,7 @@ import java.util.*;
 
 public class BinaryTreeTest {
     public static void main(String[] args) {
-        /*
+        
         System.out.println("------------------Binary Tree----------------");
         BinaryTree<Integer> binTree = new BinaryTree<Integer>();
         
@@ -16,11 +16,15 @@ public class BinaryTreeTest {
         System.out.println("Postorder(R) looks like: " + binTree.postorder());
         System.out.println("Postorder(I) looks like: " + binTree.postorderIterative());
         System.out.println("Is Balanced = " + binTree.isBalanced());
-        Random random = new Random();
-        int x = allData.get(random.nextInt(allData.size()));
-        int y = allData.get(random.nextInt(allData.size()));
-        System.out.println("Common ancestor of " + x + " and " + y + " is: " + binTree.findCommonAncestor(x, y));
-        */
+        System.out.println("Reconstructing tree from preorder and inorder...");
+        System.out.println("New Tree: ");
+        BinaryTree<Integer> newTree = new BinaryTree<Integer>();
+        printPerLevel(newTree.construct(binTree.inorderIterative(), binTree.preorderIterative()));
+        // Random random = new Random();
+        // int x = allData.get(random.nextInt(allData.size()));
+        // int y = allData.get(random.nextInt(allData.size()));
+        // System.out.println("Common ancestor of " + x + " and " + y + " is: " + binTree.findCommonAncestor(x, y));
+        
 
         /*
         System.out.println("\n\nGenerating tree with min height from given input:");
@@ -30,7 +34,7 @@ public class BinaryTreeTest {
         System.out.println("Inorder looks like: " + binTreeS.inorder());
         System.out.println("Preorder looks like: " + binTreeS.preorder());
         System.out.println("Is Balanced = " + binTreeS.isBalanced());
-        */
+        
         
         System.out.println("-----------Int Binary Tree----------------");
         IntBinaryTree binTree = new IntBinaryTree();
@@ -39,6 +43,7 @@ public class BinaryTreeTest {
         populateTree(allData, binTree);
         printPerLevel(binTree);
         System.out.println("Inorder(R) looks like: " + binTree.inorder());
+        System.out.println("Inorder(No Stack) looks like: " + binTree.inorderNoStack());
         System.out.println("Preorder(R) looks like: " + binTree.preorder());
         System.out.println("Postorder(R) looks like: " + binTree.postorder());
         System.out.println("----Removing nodes with path len > " + args[1] + "-------------");
@@ -46,7 +51,7 @@ public class BinaryTreeTest {
         printPerLevel(binTree);
         System.out.println("Inorder(R) looks like: " + binTree.inorder());
         System.out.println("Preorder(R) looks like: " + binTree.preorder());
-        System.out.println("Postorder(R) looks like: " + binTree.postorder());
+        System.out.println("Postorder(R) looks like: " + binTree.postorder());*/
     }
     
     public static void populateTree(int maxNodes, BinaryTree<Integer> tree) {

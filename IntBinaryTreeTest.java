@@ -9,9 +9,13 @@ public class IntBinaryTreeTest {
         List<Integer> allData = generateData(Integer.parseInt(args[0]));
         populateTree(allData, binTree);
         printPerLevel(binTree);
-        System.out.println("----Removing nodes with path len > " + args[1] + "-------------");
-        binTree.removeNodesNotInPathWithGivenSum(Integer.parseInt(args[1]));
-        printPerLevel(binTree);
+        System.out.println("Preorder of tree is " + binTree.preorder());
+        for (int sum = 10; sum <= 30; sum++) {
+            System.out.println("All paths in tree with sum = " + sum + " are:" + binTree.getRootToLeafPathsWithGivenSum(sum));
+        }
+        // System.out.println("----Removing nodes with path len > " + args[1] + "-------------");
+        // binTree.removeNodesNotInPathWithGivenSum(Integer.parseInt(args[1]));
+        // printPerLevel(binTree);
     }
 
     public static List<Integer> generateData(int maxNodes) {

@@ -110,6 +110,66 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+    * Constructs a binary tree from it's preorder and inorder traversal.
+    */
+    public BinaryTree<T> construct(List<T> inorder, List<T> preorder) {
+        BinaryTree<T> tree = new BinaryTree<T>();
+        tree.root = construct(inorder, 0, inorder.size()-1, preorder, 0);
+        return tree;
+    }
+
+    private Node construct(List<T> inorder, int startI, int endI, List<T> preorder, int pIndex) {
+        // find index of this node in inorder and divide list accordingly
+        Node node = new Node(preorder.get(pIndex));
+        int index = findInList(inorder, startI, endI, node.data);
+        if (index != -1) {
+            node.left = construct(inorder, 0, index-1, preorder, pIndex+1);
+            node.right = construct(inorder, index+1, inorder.size()-1, preorder, pIndex+1);
+        }
+        return node;
+    }
+
+    private int findInList(List<T> list, int start, int end, T data) {
+        for (int i = start; i < end; i++) {
+            if (list.get(i).equals(data)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public List<T> inorderNoStack() {
+        List<T> sequence = new ArrayList<T>();
+
+        Node node = root;
+        while (node != null) {
+            if (node.left == null) {
+                //if no left, then print this node and move to right
+                sequence.add(node.data);
+                node = node.right;
+            } else {
+                // find predecessor of this node i.e. 
+                // right most node in left subtree of this node
+                Node temp = node.left;
+                while (temp.right != null && temp.right != node) {
+                    temp = temp.right;
+                }
+                // make myself rightMost child of right node
+                if (temp.right == null) {
+                    temp.right = node;
+                    node = node.left;
+                } else if (temp.right == node) {
+                    // reset the tree
+                    temp.right = null;
+                    sequence.add(node.data);
+                    node = node.right;
+                }
+            }
+        }
+        return sequence;
+    }
+
 
     public String inorder() {
         StringBuffer sb = new StringBuffer();
