@@ -9,6 +9,10 @@ public class BinaryTree<T extends Comparable<T>> {
         public Node(T data) {
             this.data = data;
         }
+        
+        public void print() {
+            System.out.print(data + " ");
+        }
     }
 
     protected Node root;
@@ -311,6 +315,34 @@ public class BinaryTree<T extends Comparable<T>> {
         traversePerLevel(node.right, level + 1, nodesPerLevel);
     }
 
+    public void printPerLevel() {
+        Queue<Node> queue = new LinkedList<Node>();
+        int nodesInCurrentLevel = 0, nodesInNextLevel = 0;
+        queue.add(this.root);
+        nodesInCurrentLevel = 1;
+
+        while (nodesInCurrentLevel > 0 || nodesInNextLevel > 0) {
+            if (nodesInCurrentLevel >0) {
+                Node node = queue.remove();
+                nodesInCurrentLevel--;
+                if (node.left != null) {
+                    queue.add(node.left);
+                    nodesInNextLevel++;
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                    nodesInNextLevel++;
+                }
+                System.out.print(node.data + " ");
+            } else {
+                nodesInCurrentLevel = nodesInNextLevel;
+                nodesInNextLevel = 0;
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
     public void createTreeWithMinHeight(T[] values) {
         this.root = new Node(null);
         this.createTreeWithMinHeight(values, 0, values.length - 1, this.root);
@@ -336,4 +368,40 @@ public class BinaryTree<T extends Comparable<T>> {
             createTreeWithMinHeight(values, mid + 1, end, root.right);
         }
     }
+
+    public void printEdgeNodes() {
+        if (root == null) {
+            return;
+        }
+        root.print();
+        printLeftEdge(root.left, true);
+        printRightEdge(root.right, true);
+    }
+
+    private void printLeftEdge(Node node, boolean print) {
+        if (node == null) {
+            return;
+        }
+        if (print) {
+            node.print();
+        } else if (node.left == null || node.right == null) {
+            node.print();
+        }
+        printLeftEdge(node.left, true);
+        printLeftEdge(node.right, false);
+    }
+
+    private void printRightEdge(Node node, boolean print) {
+        if (node == null) {
+            return;
+        }
+
+        if (print) {
+            node.print();
+        } else if (node.left == null || node.right == null) {
+            node.print();
+        }
+        printRightEdge(node.right, true);
+        printRightEdge(node.left, false);
+    } 
 }
