@@ -1,12 +1,15 @@
 import java.util.*;
 
-public class LinkedListTest {
+public class MyLinkedListTest {
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<Integer>();
+        MyLinkedList<Integer> list = new MyLinkedList<Integer>();
         for(String arg : args) {
             list.append(Integer.parseInt(arg));
         }
         System.out.println("List: " + list.toString());
+        list.reverseGrouped(2);
+        System.out.println("Reverse in group of 2: " + list.toString());
+
         System.out.println("Point of loop beginning = " + list.findLoopBegin());
         
         System.out.println("After removing dups: " + list.copy().removeDups().toString());
@@ -14,7 +17,7 @@ public class LinkedListTest {
         System.out.println(lastParam + " from last : " + list.nthToLast(lastParam));
 
         //generate other linked list
-        LinkedList<Integer> otherList = new LinkedList<Integer>();
+        MyLinkedList<Integer> otherList = new MyLinkedList<Integer>();
         Random rand = new Random();
         int len = rand.nextInt(args.length);
         for(int i = 0; i < len; i++) {
@@ -24,7 +27,7 @@ public class LinkedListTest {
         System.out.println("Sum of 2 lists: " + list.sumDigits(otherList).toString());
         
         // create a circular list out of arguments
-        LinkedList<Integer> circular = list.makeCircular();
+        MyLinkedList<Integer> circular = list.makeCircular();
         System.out.println("Circular list = " + circular.toString());
         System.out.println("Point of loop beginning = " + circular.findLoopBegin());
     }

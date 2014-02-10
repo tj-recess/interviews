@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class LinkedList<T> {
+public class MyLinkedList<T> {
     
     private int len = 0;
     private Node root = null;
@@ -34,7 +34,7 @@ public class LinkedList<T> {
         len++;
     }
 
-    public LinkedList<T> removeDups() {
+    public MyLinkedList<T> removeDups() {
         if(root == null) return null;
         Node matcherNode = root;
         while(matcherNode != null) {
@@ -74,8 +74,8 @@ public class LinkedList<T> {
         }
     }
 
-    public LinkedList<Integer> sumDigits(LinkedList<T> other) {
-        LinkedList<Integer> result = new LinkedList<Integer>();
+    public MyLinkedList<Integer> sumDigits(MyLinkedList<T> other) {
+        MyLinkedList<Integer> result = new MyLinkedList<Integer>();
         int carry = 0;
         for(Node curThis = root, curOther = other.root; curThis != null || curOther != null; ) {
             int curThisValue = curThis == null ? 0 : ((Integer)curThis.data).intValue();
@@ -90,17 +90,17 @@ public class LinkedList<T> {
         return result;
     }
 
-    public LinkedList<T> copy() {
-        LinkedList<T> newList = new LinkedList<T>();
+    public MyLinkedList<T> copy() {
+        MyLinkedList<T> newList = new MyLinkedList<T>();
         for(Node cur = root; cur != null; cur = cur.next) {
             newList.append(cur.data);
         }
         return newList;
     }
 
-    public LinkedList<T> makeCircular() {
+    public MyLinkedList<T> makeCircular() {
         // find a random node and point it to one of the earlier nodes
-        LinkedList<T> copy = this.copy();
+        MyLinkedList<T> copy = this.copy();
         Random rand = new Random();
         int loopLocation = rand.nextInt(copy.len - 1);
         Node loopLocationNode = copy.root;
@@ -166,4 +166,47 @@ public class LinkedList<T> {
         }
         return slowNode.data.toString();
     }
+
+    public void reverseGrouped(int n) {
+        this.root = reverseGrouped(this.root, n);
+    }
+
+    private Node reverseGrouped(Node node, int n) {
+        Node temp = node;
+        
+        if (temp == null || temp.next == null) {
+            return temp;
+        }
+        
+        for (int i = 0; i < (n-1); i++) {
+            temp = temp.next;
+            if (temp == null) {
+                return node;
+            }
+        }
+        
+        Node tail = temp.next;
+        Node head = reverse(node, temp);
+        node.next = reverseGrouped(tail, n);
+        return head;
+    }
+
+    private Node reverse(Node start, Node end) {
+        if (start == null) return null;
+        Node prvs = null;
+        Node curr = start;
+        Node next = start.next;
+        while (next != end) {
+            curr.next = prvs;
+            prvs = curr;
+            curr = next;
+            next = next.next;
+        }
+        if (next == null) { return curr; }
+        else {
+            next.next = curr;
+            return next;
+        }
+    }
+
 }

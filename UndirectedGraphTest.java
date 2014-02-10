@@ -41,5 +41,6 @@ public class UndirectedGraphTest {
         int id2 = random.nextInt(numNodes);
         System.out.println("Path between id1=" + id1 + " and id2=" + id2 + "?? : " + ug.isReachable(id1, id2));
         System.out.println();
+        System.out.println("DFS: " + ug.doDFS());
     }
 }

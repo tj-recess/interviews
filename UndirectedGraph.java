@@ -55,8 +55,36 @@ public class UndirectedGraph<T> implements Graph<T> {
     }
 
     public List<T> doDFS() {
-        //TODO:
-        return null;
+        Map<GraphNode<T>, NodeColor> colorMap = new HashMap<GraphNode<T>, NodeColor>();
+        Map<GraphNode<T>, GraphNode<T>> parentNodeMap = new HashMap<GraphNode<T>, GraphNode<T>>();
+        for (GraphNode<T> node : nodes) {
+            colorMap.put(node, NodeColor.WHITE);
+            parentNodeMap.put(node, null);
+        }
+
+        List<T> visitedData = new ArrayList<T>();
+        for (GraphNode<T> node : nodes) {
+            if (colorMap.get(node) == NodeColor.WHITE) {
+                doDFS(node, colorMap, parentNodeMap, visitedData);
+            }
+        }
+        return visitedData;
+    }
+
+    private void doDFS(GraphNode<T> node, Map<GraphNode<T>, NodeColor> colorMap, Map<GraphNode<T>, GraphNode<T>> parentNodeMap, List<T> visitedData) {
+        if (colorMap.get(node) != NodeColor.WHITE) {
+            System.out.println("BUG: Algorithm is incorrect");
+            return;
+        }
+        visitedData.add(node.getData());
+        colorMap.put(node, NodeColor.GREY);
+        for (GraphNode<T> neighbor : node.getNeighbors().keySet()) {
+            if (colorMap.get(neighbor) == NodeColor.WHITE) {
+                parentNodeMap.put(neighbor, node);
+                doDFS(neighbor, colorMap, parentNodeMap, visitedData);
+            }
+        }
+        colorMap.put(node, NodeColor.BLACK);
     }
 
     public List<T> doBFS() {
@@ -118,5 +146,11 @@ public class UndirectedGraph<T> implements Graph<T> {
         List<GraphNode<T>> visited = new ArrayList<GraphNode<T>>();
         doBFS(node1, visited);
         return visited.contains(node2);
+    }
+
+    public enum NodeColor {
+        WHITE,
+        GREY,
+        BLACK;
     }
 }
